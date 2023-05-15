@@ -1,4 +1,5 @@
 from polaris import Component
+from polaris.seaice.tests.single_column import SingleColumn
 
 
 class SeaIce(Component):
@@ -13,3 +14,4 @@ class SeaIce(Component):
         super().__init__(name='seaice')
 
         # please keep these in alphabetical order
+        self.add_test_group(SingleColumn(component=self))
