@@ -36,6 +36,10 @@ class InitialState(Step):
         super().__init__(test_case=test_case, name='initial_state')
         self.resolution = resolution
 
+        for file in ['base_mesh.nc', 'culled_mesh.nc', 'culled_graph.info',
+                     'initial_state.nc']:
+            self.add_output_file(file)
+
     def run(self):
         """
         Run this step of the test case
@@ -150,9 +154,10 @@ class InitialState(Step):
         ds.attrs['dc'] = dc
 
         write_netcdf(ds, 'initial_state.nc')
+        ds_mesh['maxLevelCell'] = ds.maxLevelCell
 
-        plot_horiz_field(ds, ds_mesh, 'temperature',
+        plot_horiz_field(ds, ds, 'temperature',
                          'initial_temperature.png')
-        plot_horiz_field(ds, ds_mesh, 'normalVelocity',
+        plot_horiz_field(ds, ds, 'normalVelocity',
                          'initial_normal_velocity.png', cmap='cmo.balance',
                          show_patch_edges=True)

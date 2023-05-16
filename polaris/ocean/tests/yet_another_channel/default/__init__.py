@@ -2,6 +2,7 @@ import os
 
 from polaris import TestCase
 from polaris.ocean.tests.yet_another_channel.initial_state import InitialState
+from polaris.validate import compare_variables
 
 
 class Default(TestCase):
@@ -39,3 +40,14 @@ class Default(TestCase):
         super().__init__(test_group=test_group, name=name, subdir=subdir)
         self.add_step(
             InitialState(test_case=self, resolution=resolution))
+
+    def validate(self):
+        """
+        Compare ``temperature``, ``salinity``, and ``layerThickness`` in the
+        ``initial_state`` step with a baseline if one was provided.
+        """
+        super().validate()
+
+        variables = ['temperature', 'salinity', 'layerThickness']
+        compare_variables(test_case=self, variables=variables,
+                          filename1='initial_state/initial_state.nc')
