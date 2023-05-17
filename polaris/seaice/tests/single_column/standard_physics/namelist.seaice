@@ -1,0 +1,8 @@
+config_run_duration = '01-00-00_00:00:00'
+
+config_nSnowLayers = 5
+
+config_use_velocity_solver = false
+config_use_advection = false
+
+config_use_ocean_mixed_layer = false
