@@ -1,13 +1,14 @@
 import os
 
 from polaris import TestCase
+from polaris.seaice.tests.single_column.standard_physics.forward import Forward
+from polaris.validate import compare_variables
 
 
 class StandardPhysics(TestCase):
     """
     The standard physics test case for the "single column" test group creates
-    the mesh and initial condition, then performs a short forward run on 4
-    cores.
+    the mesh and initial condition, then performs a short forward run.
 
     Attributes
     ----------
@@ -25,5 +26,16 @@ class StandardPhysics(TestCase):
         """
         name = 'standard_physics'
         super().__init__(test_group=test_group, name=name)
-        # self.add_step(
-        #   InitialState(test_case=self))
+        self.add_step(Forward(test_case=self))
+
+    def validate(self):
+        """
+        Compare six output variables in the ``forward`` step
+        with a baseline if one was provided.
+        """
+        super().validate()
+
+        variables = ['iceAreaCell', 'iceVolumeCell', 'snowVolumeCell',
+                     'surfaceTemperatureCell', 'shortwaveDown', 'longwaveDown']
+        compare_variables(test_case=self, variables=variables,
+                          filename1='forward/output/output.2001.nc')
