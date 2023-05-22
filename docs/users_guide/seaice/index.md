@@ -1,6 +1,6 @@
 (seaice)=
 
-# Ocean component
+# Sea ice component
 
 The `seaice` component in polaris contains test groups and test cases for the
 [MPAS-Seaice](https://mpas-dev.github.io/seaice/sea_ice.html)).  For more

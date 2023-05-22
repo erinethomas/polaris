@@ -5,5 +5,5 @@
 ```{toctree}
 :titlesonly: true
 
-template
+single_column
 ```

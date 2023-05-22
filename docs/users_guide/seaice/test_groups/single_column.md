@@ -1,25 +1,17 @@
-(component-test-group-name)=
+(seaice-single-column)=
 
-# test_group_name
+# single_column
+The `single_column` test group includes any sea ice tests 
+using only column physics.
 
-Description of the test group.
-
-(component-test-group-name-test-case-name)=
-
-## test_case_name
-
-In cases where the test cases within a test group share many characteristics,
-it may be more appropriate to move the certain sections up one level to the
-test group. In that case, the respective section should still be included for
-each test case, specifying any or no differences from the section in the test
-group level.
+## standard_physics
 
 ### description
 
-Description of the test case. Images that show the test case configuration or
-results are particularly welcome here.
+The test runs a single column in the Arctic with coordinates 71.35N, 156.5W.
+A one year simulation is run /......
 
-```{image} images/cosine_bell_convergence.png
+```{image} images/single_cell.png
 :align: center
 :width: 500 px
 ```

@@ -44,6 +44,7 @@ users_guide/test_cases
 users_guide/config_files
 users_guide/test_suites
 users_guide/ocean/index
+users_guide/seaice/index
 users_guide/machines/index
 ```
 
