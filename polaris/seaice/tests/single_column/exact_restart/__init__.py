@@ -30,7 +30,9 @@ class ExactRestart(TestCase):
 
         step = Forward(test_case=self, name='full_run')
         step.add_output_file(
-            filename='restarts/restart.2000-01-01-12.00.00.nc')
+            filename='restarts/restart.2000-01-01_12.00.00.nc')
+        step.add_output_file(
+            filename='restarts/restart.2000-01-02_00.00.00.nc')
         step.add_namelist_file(
             package='polaris.seaice.tests.single_column.exact_restart',
             namelist='namelist.full')
@@ -41,8 +43,10 @@ class ExactRestart(TestCase):
 
         step = Forward(test_case=self, name='restart_run')
         step.add_input_file(
-            filename='restarts/restart.2000-01-01-12.00.00.nc',
-            target='../../full_run/restarts/restart.2000-01-01-12.00.00.nc')
+            filename='restarts/restart.2000-01-01_12.00.00.nc',
+            target='../../full_run/restarts/restart.2000-01-01_12.00.00.nc')
+        step.add_output_file(
+            filename='restarts/restart.2000-01-02_00.00.00.nc')
         step.add_namelist_file(
             package='polaris.seaice.tests.single_column.exact_restart',
             namelist='namelist.restart')
@@ -50,3 +54,43 @@ class ExactRestart(TestCase):
             package='polaris.seaice.tests.single_column.exact_restart',
             streams='streams.restart')
         self.add_step(step)
+
+    def validate(self):
+        """
+        Compare variables in the  restart files from full run and restart run
+        """
+        super().validate()
+        variables = ['iceAreaCategory',
+                     'iceVolumeCategory',
+                     'snowVolumeCategory',
+                     'surfaceTemperature',
+                     'iceEnthalpy',
+                     'iceSalinity',
+                     'snowEnthalpy',
+                     'iceAge',
+                     'firstYearIceArea',
+                     'levelIceArea',
+                     'levelIceVolume',
+                     'pondArea',
+                     'pondDepth',
+                     'pondLidThickness',
+                     'uVelocity',
+                     'vVelocity',
+                     'freezeOnset',
+                     'snowfallRate',
+                     'pondSnowDepthDifference',
+                     'pondLidMeltFluxFraction',
+                     'solarZenithAngleCosine',
+                     'shortwaveScalingFactor',
+                     'shortwaveVisibleDirectDown',
+                     'shortwaveVisibleDiffuseDown',
+                     'shortwaveIRDirectDown',
+                     'shortwaveIRDiffuseDown',
+                     'oceanStressCellU',
+                     'oceanStressCellV',
+                     'seaSurfaceTemperature',
+                     'freezingMeltingPotential',
+                     'airOceanDragCoefficientRatio']
+        compare_variables(test_case=self, variables=variables,
+                          filename1='full_run/restarts/restart.2000-01-02_00.00.00.nc',  # noqa: E501
+                          filename2='restart_run/restarts/restart.2000-01-02_00.00.00.nc')  # noqa: E501
