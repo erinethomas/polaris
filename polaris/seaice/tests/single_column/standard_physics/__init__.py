@@ -1,7 +1,7 @@
 import os
 
 from polaris import TestCase
-from polaris.seaice.tests.single_column.standard_physics.forward import Forward
+from polaris.seaice.tests.single_column.forward import Forward
 from polaris.seaice.tests.single_column.standard_physics.viz import Viz
 from polaris.validate import compare_variables
 
@@ -27,7 +27,9 @@ class StandardPhysics(TestCase):
         """
         name = 'standard_physics'
         super().__init__(test_group=test_group, name=name)
-        self.add_step(Forward(test_case=self))
+        step = Forward(test_case=self)
+        step.add_output_file(filename='output/output.2000.nc')
+        self.add_step(step)
         self.add_step(Viz(test_case=self))
 
     def validate(self):
@@ -40,4 +42,4 @@ class StandardPhysics(TestCase):
         variables = ['iceAreaCell', 'iceVolumeCell', 'snowVolumeCell',
                      'surfaceTemperatureCell', 'shortwaveDown', 'longwaveDown']
         compare_variables(test_case=self, variables=variables,
-                          filename1='forward/output/output.2001.nc')
+                          filename1='forward/output/output.2000.nc')

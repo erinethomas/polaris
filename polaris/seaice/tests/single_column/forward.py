@@ -9,7 +9,7 @@ class Forward(ModelStep):
     ----------
 
     """
-    def __init__(self, test_case):
+    def __init__(self, test_case, name='forward'):
         """
         Create the step
         Parameters
@@ -17,7 +17,7 @@ class Forward(ModelStep):
         test_case : polaris.TestCase
           The test case this step belongs to
         """
-        super().__init__(test_case=test_case, name='forward',
+        super().__init__(test_case=test_case, name=name,
                          ntasks=1, min_tasks=1, openmp_threads=1)
 
         self.add_input_file(filename='grid.nc',
@@ -47,8 +47,6 @@ class Forward(ModelStep):
             filename='forcing/standard_optics_mpas_seaice.nc',
             target='standard_optics_mpas_seaice.nc',
             database='domains/domain_sc_71.35_-156.5/')
-
-        self.add_output_file(filename='output/output.2001.nc')
 
         self.add_namelist_file(
             package='polaris.seaice.tests.single_column.standard_physics',
