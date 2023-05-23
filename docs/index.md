@@ -57,6 +57,7 @@ developers_guide/overview
 developers_guide/command_line
 developers_guide/organization/index
 developers_guide/ocean/index
+developers_guide/seaice/index
 developers_guide/framework/index
 developers_guide/machines/index
 developers_guide/troubleshooting
