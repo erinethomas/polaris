@@ -3,29 +3,18 @@
 # Seaice component
 
 The `seaice` component is defined by the {py:class}`polaris.seaice.Seaice`
-class. All test cases in the `seaice` component share the following set of
-default config options:
+class. All test cases in the `seaice` component  are single column tests 
+and contain very simple config options as follows:
 
-```cfg
-# This config file has default config options for the seaice component, which
-is MPAS-Seaice
-
-# Options related the seaice component
-[seaice]
-# Which model is used
-model = mpas-seaice
-```
-
-MPAS-Seaice test cases also have these config options:
 ```cfg
 # This config file has default config options for MPAS-Seaice
 
-# The paths section points compass to external paths
+# The paths section points polaris to external paths
 [paths]
 
 # the relative or absolute path to the root of a branch where MPAS-Seaice
 # has been built
-component_path = ${paths:compass_branch}/e3sm_submodules/E3SM-Project/components/mpas-seaice
+component_path = ${paths:polaris_branch}/e3sm_submodules/E3SM-Project/components/mpas-seaice
 
 # The namelists section defines paths to example_compact namelists that will
 # be used to generate specific namelists. By default, these point to the
@@ -41,13 +30,17 @@ forward = ${paths:component_path}/default_inputs/namelist.seaice
 # successful build of the seaice model. Change these in a custom config file if
 # you need a different location.
 [streams]
-forward = ${paths:component_path}/default_inputs/streams.seaice.forward
-init    = ${paths:component_path}/default_inputs/streams.seaice.init
+forward = ${paths:component_path}/default_inputs/streams.seaice
 
+# The registry section points to a post-processed registry file that can
+# be used to identify the types (var, var_array, var_struct) of variables in
+# a stream
+[registry]
+processed = ${paths:component_path}/src/Registry_processed.xml
 
 # The executables section defines paths to required executables. These
 # executables are provided for use by specific test cases.  Most tools that
-# compass needs should be in the conda environment, so this is only the path
+# polaris needs should be in the conda environment, so this is only the path
 # to the MPAS-Seaice executable by default.
 [executables]
 component = ${paths:component_path}/seaice_model
