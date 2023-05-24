@@ -1,8 +1,8 @@
-(dev-ocean-models)=
+(dev-seaice-models)=
 
 # Models
 
-Polaris is designed to support multiple ocean models.
+Polaris is designed to support the single column version of MPAS-Seaice.
 
 (dev-ocean-supported-models)=
 
@@ -11,5 +11,5 @@ Polaris is designed to support multiple ocean models.
 ```{toctree}
 :titlesonly: true
 
-mpas_ocean
+mpas_seaice
 ```
