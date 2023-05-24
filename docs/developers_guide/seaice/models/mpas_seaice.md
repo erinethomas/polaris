@@ -1,43 +1,50 @@
-# MPAS-Ocean
+# MPAS-Seaice
 
-The following are considerations that may be useful in developing a test case for MPAS-Ocean
+The following are considerations that may be useful in developing a new test case for MPAS-Seaice.
 
 ## Initial conditions
+MPAS-Seaice has no specific requirements for defining the sea ice inital conditions. 
+The current default setting for the single column test cases is a solid 1m thick 'disk' 
+of sea ice that covers the single-grid cell domain.  
+The MPAS-Seaice initial conditions are defined in the default namelist file contained 
+within the component directory: 
+`e3sm_submodules/E3SM-Project/components/mpas-seaice/namelist.seaice`
 
-The minimal set of initial state variables that must be defined in the `initial_state` step of each test case is:
+The 1m thick sea ice disk (the default inital condidions) are set through the following 
+config options within in the namelist file:
+```
+&initialize
+    config_initial_ice_area = 1.0
+    config_initial_ice_volume = 1.0
+```
 
-* `temperature`
-* `salinity`
-* `normalVelocity`
-* `fCell`
-* `fEdge`
-* `fVertex`
+To define alternative sea ice inital conditions, modifications should be made to the
+namelist file placed within the test case directory. 
 
 ## Boundary conditions
 
-The following horizontal boundary conditions are supported for planar domains
+what are the default boundary cond?
 
-* periodic
-* free slip (solid boundary, `normalVelocity = 0` at edges of the domain,
-tangential force is 0)
-
-These horizontal boundary conditions are enforced at the stage at which the
-planar mesh is constructed, by specifying `nonperiodic` as true or false.
-
-The following vertical boundary conditions are supported:
-
-* free slip (tangential force is 0, drag is disabled). Generally only used for
-the free surface.
-* free surface with specified flux (of mass, momentum, and/or scalars).
-Generally only possible at the top boundary.
-* rigid surface with no slip (velocity normal to the surface is zero,
-tangential force is non-zero because bottom or top drag is applied). While the
-boundary is no-slip, `normalVelocity` is solved at the mid-point of the layer
-and is generally non-zero.
 
 ## Forcing
 
-Constant or time-varying forcing is possible for some properties. The forcing
-fields (generally 2-d and applied at the surface) are generally read in from a
-forcing stream. For more details, start by consulting the Registry under the
-headings `forcing` and `tidal_forcing`.
+The default forcing for MPAS-Seaice is CORE forcing beginning on 2000-01-01_00:00:00.
+These default settings are defined in the namelist file within the component directory:
+`e3sm_submodules/E3SM-Project/components/mpas-seaice/namelist.seaice`
+
+```
+&forcing
+    config_atmospheric_forcing_type = 'CORE'
+    config_forcing_start_time = '2000-01-01_00:00:00'
+    config_forcing_cycle_start = '2000-01-01_00:00:00'
+    config_forcing_cycle_duration = '2-00-00_00:00:00'
+    config_forcing_precipitation_units = 'mm_per_sec'
+    config_forcing_sst_type = 'ncar'
+    config_update_ocean_fluxes = false
+    config_include_pond_freshwater_feedback = false
+/
+```
+
+If modifiactions to the forcing are needed for test cases, they should be added to
+the namelist file placed within the test case directory.
+
